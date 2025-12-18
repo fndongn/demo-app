@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the app...'
+                sh 'chmod +x app_jenkins.sh'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing the app...'
+                sh './app_jenkins.sh'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the app...'
+                // For demo purposes, deployment is just echoing
+                sh 'echo "App deployed!"'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
